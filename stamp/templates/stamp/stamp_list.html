@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body class="mt-5">
+    <div class="container">
+        <div class="row mt-5 ">
+            <form id="themeform" method="GET" action="{% url 'stamp:stamp_list' %}">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label for="exampleInputEmail1" class="form-label">Themes</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-select" id="themeselect" aria-label="Default select example">
+                            {% for theme in themes %}
+                                <option value="{{theme.id}}">{{theme}}</option>
+                            {% endfor %}
+                            
+
+                          </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Stamp year</th>
+                        <th scope="col">Stamp denomination</th>
+                    </tr>
+                </thead>
+                <tbody id="stamp_list">
+                    {% include "stamp/stamp_table_list.html" %}
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+        $("#themeselect").change(function () {
+          var url = $("#themeform").attr("action");  // get the url of the `load_cities` view
+          var themeId = $(this).val();  // get the selected country ID from the HTML input
+    
+          console.log(themeId)
+
+          $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+              'theme': themeId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+              $("#stamp_list").html(data['form']);
+              console.log(data)  // replace the contents of the city input with the data that came from the server
+            }
+          });
+    
+        });
+      </script>
+
+</body>
+
+</html>

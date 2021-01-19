@@ -1,0 +1,7 @@
+{% for stamp in stamps %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{stamp.year}}</td>
+        <td>{{stamp.denomination}}</td>
+    </tr>
+{% endfor %}
