@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Stamp(models.Model):
     year = models.CharField(max_length=12)
     denomination = models.CharField(max_length=100)

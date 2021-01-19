@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -9,8 +10,10 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
+    <style> .ui-helper-hidden-accessible{display: none;};
+        
+    </style>
+    <title>Django Task</title>
 </head>
 
 <body class="mt-5">
@@ -43,28 +46,25 @@
             </table>
         </div>
     </div>
-    <style> .ui-helper-hidden-accessible{display: none;};</style>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-    </script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"">
     
     
     <script>
         $( function() {
-          $( "#theme_name" ).autocomplete({
-            source:"{% url 'stamp:stamp_list' %}",
-            minLength: 2 , 
-            select : function( event ) {
-                $.ajax({                       // initialize an AJAX request
-                    url: "{% url 'stamp:stamp_list' %}",                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+          $( "#theme_name" ).autocomplete({                          //get the text from input using the Jquery autocomplete widget
+            source:"{% url 'stamp:stamp_list' %}",                   //conect the widget to django server url  
+            minLength: 2 ,                                           //specify the min length of search
+            select : function( event ) {                             //call the ajax after selecting the theme value  
+                $.ajax({                                             // initialize an AJAX request
+                    url: "{% url 'stamp:stamp_list' %}",             // set the url of the ajax request to the django server url
                     data: {
-                      'theme': $(this).val()       // add the country id to the GET parameters
+                      'theme': $(this).val()                          // add the theme text to the GET parameters
                     },
-                    success: function (data) {   // `data` is the return of the `load_cities` view function
-                      $("#stamp_list").html(data['form']);
-                       // replace the contents of the city input with the data that came from the server
+                    success: function (data) {                        // `data` is the return of the `stamp_list` view function
+                      $("#stamp_list").html(data['form']);            // replace the contents of the stamp table with the data that came from the server
                     }
                   }); 
             }

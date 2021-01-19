@@ -4,4 +4,6 @@
         <td>{{stamp.year}}</td>
         <td>{{stamp.denomination}}</td>
     </tr>
+{% empty %}
+    <h6 class="mt-5"> no stamps found for this theme</h6>
 {% endfor %}
