@@ -1,0 +1,1 @@
+# ajij-consult-django-task-
