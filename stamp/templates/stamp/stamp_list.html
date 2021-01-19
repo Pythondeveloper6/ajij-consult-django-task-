@@ -22,13 +22,7 @@
                         <label for="exampleInputEmail1" class="form-label">Themes</label>
                     </div>
                     <div class="col-md-6">
-                        <select class="form-select" id="themeselect" aria-label="Default select example">
-                            {% for theme in themes %}
-                                <option value="{{theme.id}}">{{theme}}</option>
-                            {% endfor %}
-                            
-
-                          </select>
+                        <input type="text" class="form-control" id="theme_name">
                     </div>
                 </div>
             </form>
@@ -49,33 +43,36 @@
             </table>
         </div>
     </div>
-
+    <style> .ui-helper-hidden-accessible{display: none;};</style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
-    <script type="text/javascript">
-        $("#themeselect").change(function () {
-          var url = $("#themeform").attr("action");  // get the url of the `load_cities` view
-          var themeId = $(this).val();  // get the selected country ID from the HTML input
     
-          console.log(themeId)
-
-          $.ajax({                       // initialize an AJAX request
-            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-            data: {
-              'theme': themeId       // add the country id to the GET parameters
-            },
-            success: function (data) {   // `data` is the return of the `load_cities` view function
-              $("#stamp_list").html(data['form']);
-              console.log(data)  // replace the contents of the city input with the data that came from the server
+    <script>
+        $( function() {
+          $( "#theme_name" ).autocomplete({
+            source:"{% url 'stamp:stamp_list' %}",
+            minLength: 2 , 
+            select : function( event ) {
+                $.ajax({                       // initialize an AJAX request
+                    url: "{% url 'stamp:stamp_list' %}",                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                    data: {
+                      'theme': $(this).val()       // add the country id to the GET parameters
+                    },
+                    success: function (data) {   // `data` is the return of the `load_cities` view function
+                      $("#stamp_list").html(data['form']);
+                       // replace the contents of the city input with the data that came from the server
+                    }
+                  }); 
             }
           });
-    
-        });
-      </script>
+        } );
 
+        </script>
+    
 </body>
 
 </html>
