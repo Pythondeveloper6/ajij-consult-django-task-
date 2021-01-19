@@ -4,7 +4,7 @@ from django.db import models
 class Stamp(models.Model):
     year = models.CharField(max_length=12)
     denomination = models.CharField(max_length=100)
-    theme = models.ForeignKey('Theme', related_name='', on_delete=models.CASCADE)
+    theme = models.ForeignKey('Theme', related_name='stamp_theme', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.year
