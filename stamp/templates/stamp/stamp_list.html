@@ -56,7 +56,7 @@
         $( function() {
           $( "#theme_name" ).autocomplete({                          //get the text from input using the Jquery autocomplete widget
             source:"{% url 'stamp:stamp_list' %}",                   //conect the widget to django server url  
-            minLength: 2 ,                                           //specify the min length of search
+            minLength: 0 ,                                           //specify the min length of search
             select : function( event ) {                             //call the ajax after selecting the theme value  
                 $.ajax({                                             // initialize an AJAX request
                     url: "{% url 'stamp:stamp_list' %}",             // set the url of the ajax request to the django server url
